@@ -12,6 +12,16 @@
             Console.WriteLine($"Legmagasabb életű karakter neve: {skibidi.Item1}, szintje: {skibidi.Item2}, ereje: {skibidi.Item3}"); Console.WriteLine();
 
             SzintAvg(karakterek);
+
+            EroRanking(karakterek);
+
+            Console.WriteLine($"{karakterek[0].Nev} erősebb-e, mint 40: {ErosE(karakterek[0],40)}");
+
+            Console.WriteLine($"8-nál nagyobb szintű karakterek:");
+            foreach(Karakter k in SzintFilter(karakterek, 8))
+            {
+                Console.WriteLine($"{k.Nev} - {k.Szint}");
+            }
         }
 
         static void Beolvas(string file, List<Karakter> karakterek)
@@ -48,6 +58,35 @@
                 ossz += k.Szint;
             }
             Console.WriteLine($"Összes szint átlaga: {ossz/karakterek.Count}");
+        }
+
+        static void EroRanking(List<Karakter> karakterek)
+        {
+            List<Karakter> sorrend = karakterek.OrderBy(k => k.Ero).ToList();
+            sorrend.Reverse();
+            Console.WriteLine("\nKarakterek sorrendje erő szerint:");
+            for (int i = 0; i < sorrend.Count; i++)
+            {
+                Console.WriteLine($"{i+1}. {sorrend[i]}\n");
+            }
+        }
+
+        static bool ErosE(Karakter k,int ero) 
+        {
+            return (k.Ero > ero);
+        }
+
+        static List<Karakter> SzintFilter(List<Karakter> karakterek, int szint)
+        {
+            List<Karakter> jok = [];
+            foreach(Karakter k in karakterek)
+            {
+                if (k.Szint > szint)
+                {
+                    jok.Add(k);
+                }
+            }
+            return jok;
         }
     }
 }
