@@ -22,6 +22,10 @@
             {
                 Console.WriteLine($"{k.Nev} - {k.Szint}");
             }
+
+            CsV(karakterek);
+
+            Top3(karakterek);
         }
 
         static void Beolvas(string file, List<Karakter> karakterek)
@@ -87,6 +91,35 @@
                 }
             }
             return jok;
+        }
+
+        static void CsV(List<Karakter> karakterek)
+        {
+            string szoveg = "Név;Szint;Életerő;Erő\n";
+            foreach(Karakter k in karakterek)
+            {
+                szoveg += k.Nev + ";" + k.Szint + ";" + k.EletEro + k.Ero +"\n";
+            }
+
+            File.WriteAllText("karakterek.csv", szoveg);
+        }
+
+        static void Top3(List<Karakter> karakterek)
+        {
+            List<int[]> osszEro = [];
+
+            foreach (Karakter k in karakterek)
+            {
+                osszEro.Add([k.Szint +  k.Ero, karakterek.IndexOf(k)]);
+            }
+
+            List<int[]> sorrend = osszEro.OrderBy(a => a[0]).ToList();
+            sorrend.Reverse();
+            Console.WriteLine("Top 3 legerősebb karakter:\n");
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($"Név: {karakterek[sorrend[i][1]].Nev}, szintje: {karakterek[sorrend[i][1]].Szint}, ereje: {karakterek[sorrend[i][1]].Ero}, szint+erő: {sorrend[i][0]}");
+            }
         }
     }
 }
