@@ -26,6 +26,10 @@
             CsV(karakterek);
 
             Top3(karakterek);
+
+            Rangsor(karakterek);
+
+            Harc(karakterek[3], karakterek[4]);
         }
 
         static void Beolvas(string file, List<Karakter> karakterek)
@@ -119,6 +123,40 @@
             for (int i = 0; i < 3; i++)
             {
                 Console.WriteLine($"Név: {karakterek[sorrend[i][1]].Nev}, szintje: {karakterek[sorrend[i][1]].Szint}, ereje: {karakterek[sorrend[i][1]].Ero}, szint+erő: {sorrend[i][0]}");
+            }
+        }
+
+        static void Rangsor(List<Karakter> karakterek)
+        {
+            List<int[]> osszEro = [];
+
+            foreach (Karakter k in karakterek)
+            {
+                osszEro.Add([k.EletEro + k.Ero, karakterek.IndexOf(k)]);
+            }
+            List<int[]> sorrend = osszEro.OrderBy(a => a[0]).ToList();
+            sorrend.Reverse();
+            Console.WriteLine("Ranglista:\n");
+            for (int i = 0;i < sorrend.Count; i++)
+            {
+                Console.WriteLine($"Név: {karakterek[sorrend[i][1]].Nev}, életereje: {karakterek[sorrend[i][1]].EletEro}, ereje: {karakterek[sorrend[i][1]].Ero}, szint+erő: {sorrend[i][0]}");
+            }
+        }
+
+        static void Harc(Karakter k1, Karakter k2) 
+        {
+            Console.WriteLine($"{k1.Nev} és {k2.Nev} elkezdek harcolni");
+            if (k1.Szint + k1.Ero > k2.Szint + k2.Ero)
+            {
+                Console.WriteLine($"{k1.Nev} győzött.");
+            }
+            else if (k2.Szint + k2.Ero > k1.Szint + k1.Ero)
+            {
+                Console.WriteLine($"{k2.Nev} győzött.");
+            }
+            else 
+            {
+                Console.WriteLine("Döntetlen");
             }
         }
     }
